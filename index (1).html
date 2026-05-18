@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AIMAAS | AI Mentoring as a Service | Black Office Unlocked</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<style>
+:root{--gold:#c8a96b;--gold-light:#e0c99a;--gold-dim:rgba(200,169,107,0.15);--radius:20px;--radius-sm:12px;--font-display:'DM Serif Display',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;--transition:0.22s cubic-bezier(0.4,0,0.2,1)}
+[data-theme="dark"]{--bg:#0c0c0e;--surface:#141417;--surface-2:#1c1c20;--surface-3:#232328;--border:rgba(255,255,255,0.07);--border-hover:rgba(200,169,107,0.35);--text:#f0f0f0;--text-2:#a0a0a8;--text-3:#606068;--shadow:0 8px 40px rgba(0,0,0,0.45);--shadow-sm:0 2px 12px rgba(0,0,0,0.3)}
+[data-theme="light"]{--bg:#f5f4f0;--surface:#ffffff;--surface-2:#f0eeea;--surface-3:#e8e6e0;--border:rgba(0,0,0,0.09);--border-hover:rgba(160,120,50,0.5);--text:#1a1a1e;--text-2:#5a5a62;--text-3:#9a9aa2;--shadow:0 8px 40px rgba(0,0,0,0.1);--shadow-sm:0 2px 12px rgba(0,0,0,0.07);--gold:#a07828;--gold-light:#c8a030;--gold-dim:rgba(160,120,40,0.12)}
+*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-body);background-color:var(--bg);color:var(--text);line-height:1.6;font-size:16px;transition:background-color .3s,color .3s}
+a{color:inherit;text-decoration:none}.container{width:min(1200px,92%);margin:0 auto}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+.theme-toggle{position:fixed;top:20px;right:24px;z-index:100;width:48px;height:28px;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;cursor:pointer;display:flex;align-items:center;padding:3px;transition:background var(--transition),border var(--transition)}
+.theme-toggle:hover{border-color:var(--gold)}.theme-toggle-thumb{width:20px;height:20px;border-radius:50%;background:var(--gold);transition:transform var(--transition);display:flex;align-items:center;justify-content:center;font-size:11px;line-height:1;user-select:none}
+[data-theme="light"] .theme-toggle-thumb{transform:translateX(20px)}
+.hero{padding:80px 0 56px;position:relative}
+.hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(200,169,107,0.07) 0%,transparent 70%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.3fr 0.7fr;gap:24px;align-items:start}
+.hero-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:40px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero-card::before{content:'AIMAAS';position:absolute;bottom:-20px;right:-10px;font-family:var(--font-display);font-size:120px;color:var(--border);line-height:1;pointer-events:none;user-select:none}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;font-weight:500}
+.eyebrow::before{content:'';display:inline-block;width:18px;height:1px;background:var(--gold)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.8rem,6vw,4.5rem);line-height:1;margin:0 0 16px;letter-spacing:-.02em}
+.hero h1 .accent{color:var(--gold);font-style:italic}
+.hero p{color:var(--text-2);font-size:1.05rem;max-width:55ch;margin:0;font-weight:300}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:20px 18px;box-shadow:var(--shadow-sm);transition:border-color var(--transition)}
+.stat-card:hover{border-color:var(--gold)}.stat-card .num{font-family:var(--font-display);font-size:2.2rem;color:var(--gold);line-height:1;margin-bottom:6px}
+.stat-card p{margin:0;color:var(--text-2);font-size:.88rem;line-height:1.45}
+.section{padding:64px 0}.section-header{margin-bottom:36px}
+h2{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.6rem);margin:8px 0 12px;letter-spacing:-.02em;line-height:1.1}
+.section-desc{color:var(--text-2);font-size:1rem;font-weight:300;max-width:66ch;margin:0}
+/* MENTOR PERSONA CARDS */
+.mentor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.mentor-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;position:relative;transition:transform var(--transition),border-color var(--transition),background var(--transition),box-shadow var(--transition);display:flex;flex-direction:column;gap:8px}
+.mentor-card:hover{transform:translateY(-4px);border-color:var(--border-hover);box-shadow:var(--shadow)}
+.mentor-card.selected{border-color:var(--gold);background:linear-gradient(160deg,var(--gold-dim),var(--surface));box-shadow:0 0 0 1px var(--gold),var(--shadow)}
+.mentor-card.maxed:not(.selected){opacity:.4;cursor:not-allowed;transform:none!important}
+.mentor-portrait{width:64px;height:64px;border-radius:50%;overflow:hidden;border:2px solid var(--border);flex-shrink:0;transition:border-color var(--transition)}
+.mentor-card.selected .mentor-portrait{border-color:var(--gold)}
+.mentor-label{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-3);font-weight:500}
+.mentor-card h3{margin:0;font-size:1rem;font-weight:600;line-height:1.2}
+.mentor-role{font-size:.82rem;color:var(--gold);font-weight:500}
+.mentor-desc{font-size:.86rem;color:var(--text-2);margin:0;line-height:1.5;flex:1}
+.mentor-style-tag{font-size:.78rem;color:var(--text-3);font-style:italic}
+.check-badge{position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;border:1px solid var(--border);background:var(--surface-2);display:flex;align-items:center;justify-content:center;transition:all var(--transition)}
+.check-badge svg{width:12px;height:12px;opacity:0;transition:opacity var(--transition);stroke:#111;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.mentor-card.selected .check-badge,.role-card.selected .role-check{background:var(--gold);border-color:var(--gold)}
+.mentor-card.selected .check-badge svg{opacity:1}
+/* 9 MENTOR ROLES */
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.role-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;cursor:pointer;position:relative;transition:transform var(--transition),border-color var(--transition),background var(--transition);display:flex;gap:12px;align-items:flex-start}
+.role-card:hover{transform:translateY(-2px);border-color:var(--border-hover)}
+.role-card.selected{border-color:var(--gold);background:var(--gold-dim)}
+.role-card.maxed:not(.selected){opacity:.4;cursor:not-allowed;transform:none!important}
+.role-num{min-width:28px;height:28px;border-radius:50%;background:var(--surface-2);border:1px solid var(--border);color:var(--text-3);font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all var(--transition)}
+.role-card.selected .role-num{background:var(--gold);border-color:var(--gold);color:#111}
+.role-name{font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:3px}
+.role-card.selected .role-name{color:var(--gold)}
+.role-desc{font-size:.82rem;color:var(--text-2);line-height:1.45;margin:0}
+/* PLAYBOOK STRATEGIES */
+.playbook-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.playbook-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);padding:26px 22px;cursor:pointer;position:relative;transition:transform var(--transition),border-color var(--transition),box-shadow var(--transition);display:flex;flex-direction:column;gap:10px}
+.playbook-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:var(--shadow)}
+.playbook-card.selected{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),var(--shadow);background:linear-gradient(160deg,var(--gold-dim),var(--surface))}
+.playbook-title{font-family:var(--font-display);font-size:1.4rem;letter-spacing:.06em;text-transform:uppercase;color:var(--text);line-height:1.05;margin:0}
+.playbook-card.selected .playbook-title{color:var(--gold)}
+.playbook-icon-row{display:flex;align-items:center;gap:6px;font-size:1.6rem;line-height:1;margin-bottom:2px}
+.playbook-subtitle{font-size:.75rem;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);font-weight:600}
+.playbook-desc{font-size:.84rem;color:var(--text-2);line-height:1.5;margin:0}
+.playbook-bullets{list-style:none;padding:0;margin:4px 0 0;display:flex;flex-direction:column;gap:5px}
+.playbook-bullets li{display:flex;gap:8px;align-items:flex-start;font-size:.82rem;color:var(--text-2);line-height:1.4}
+.playbook-bullets li::before{content:'•';color:var(--gold);flex-shrink:0;margin-top:1px}
+.playbook-bullets li.bold-item{font-weight:700;color:var(--text)}
+.playbook-check{position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;border:1px solid var(--border);background:var(--surface-2);display:flex;align-items:center;justify-content:center;transition:all var(--transition)}
+.playbook-check svg{width:12px;height:12px;opacity:0;transition:opacity var(--transition);stroke:#111;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.playbook-card.selected .playbook-check{background:var(--gold);border-color:var(--gold)}
+.playbook-card.selected .playbook-check svg{opacity:1}
+/* FORM */
+.form-layout{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-sm)}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:20px}.field:last-child{margin-bottom:0}
+.field label{font-size:.88rem;font-weight:600;color:var(--text);letter-spacing:.01em}
+.field input,.field textarea{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:13px 16px;font-size:.96rem;font-family:var(--font-body);outline:none;transition:border-color var(--transition),box-shadow var(--transition),background var(--transition);-webkit-appearance:none}
+.field input::placeholder,.field textarea::placeholder{color:var(--text-3)}
+.field input:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim);background:var(--surface)}
+.field textarea{min-height:110px;resize:vertical;line-height:1.55}
+.gs-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px}
+.gs-btn{background:var(--surface-2);border:1px solid var(--border);color:var(--text-2);border-radius:8px;padding:8px 4px;font-size:.8rem;font-family:var(--font-body);font-weight:500;cursor:pointer;text-align:center;transition:all var(--transition)}
+.gs-btn:hover{border-color:var(--border-hover);color:var(--text)}.gs-btn.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);font-weight:600}
+.gs-label-row{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+.gs-track-badge{font-size:.72rem;padding:3px 10px;border-radius:999px;border:1px solid var(--border);color:var(--text-3);cursor:default}
+.gs-track-badge.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
+/* AGENCY SELECTOR */
+.agency-search-wrap{position:relative}
+.agency-search-wrap input{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:13px 16px;font-size:.96rem;font-family:var(--font-body);outline:none;transition:border-color var(--transition),box-shadow var(--transition)}
+.agency-search-wrap input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
+.agency-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow);max-height:240px;overflow-y:auto;z-index:50;display:none}
+.agency-dropdown.open{display:block}
+.agency-group-label{padding:7px 14px 4px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-3);font-weight:500;background:var(--surface-2);border-bottom:1px solid var(--border)}
+.agency-option{padding:10px 16px;font-size:.9rem;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);transition:background var(--transition)}
+.agency-option:last-child{border-bottom:none}.agency-option:hover{background:var(--surface-2)}
+.agency-option.selected-opt{background:var(--gold-dim);color:var(--gold)}
+.agency-size{font-size:.75rem;color:var(--text-3);white-space:nowrap;margin-left:8px}
+.agency-option.selected-opt .agency-size{color:var(--gold);opacity:.7}
+.agency-manual-row{padding:10px 16px;font-size:.9rem;color:var(--gold);cursor:pointer;font-style:italic;transition:background var(--transition)}
+.agency-manual-row:hover{background:var(--surface-2)}
+.agency-selected-pill{margin-top:8px;padding:9px 14px;background:var(--gold-dim);border:1px solid rgba(200,169,107,0.25);border-radius:var(--radius-sm);font-size:.88rem;color:var(--gold);font-weight:500;display:none;justify-content:space-between;align-items:center}
+.agency-selected-pill.visible{display:flex}
+.agency-clear{background:none;border:none;color:var(--text-3);cursor:pointer;font-size:.8rem;text-decoration:underline;padding:0}
+.agency-clear:hover{color:#f08b8b}
+.agency-manual-input{margin-top:8px;display:none}.agency-manual-input.visible{display:block}
+.agency-manual-input input{width:100%;background:var(--surface-2);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:13px 16px;font-size:.96rem;font-family:var(--font-body);outline:none;transition:border-color var(--transition),box-shadow var(--transition)}
+.agency-manual-input input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
+/* RESUME */
+.resume-drop{border:2px dashed var(--border);border-radius:var(--radius-sm);padding:28px 20px;text-align:center;cursor:pointer;transition:border-color var(--transition),background var(--transition);background:var(--surface-2)}
+.resume-drop:hover,.resume-drop.dragover{border-color:var(--gold);background:var(--gold-dim)}
+.resume-drop.has-file{border-color:#9fd5a6;background:rgba(159,213,166,0.06);border-style:solid}
+.resume-drop-icon{font-size:28px;margin-bottom:10px;display:block}
+.resume-drop-title{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:5px}
+.resume-drop-sub{font-size:.82rem;color:var(--text-3);line-height:1.5}
+.resume-drop-sub strong{color:#f08b8b}
+.resume-file-name{margin-top:10px;font-size:.85rem;color:#9fd5a6;font-weight:500}
+#resumeFileInput{display:none}
+.resume-clear-btn{display:none;margin-top:8px;background:none;border:none;color:var(--text-3);font-size:.8rem;cursor:pointer;text-decoration:underline;padding:0}
+.resume-clear-btn:hover{color:#f08b8b}
+.resume-processing{display:none;margin-top:10px;font-size:.82rem;color:var(--gold);align-items:center;gap:8px;justify-content:center}
+.resume-processing.active{display:flex}
+.mini-spin{width:12px;height:12px;border:2px solid var(--gold-dim);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* POLICY */
+.policy-context-bar{background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 18px;margin-bottom:20px;font-size:.88rem;color:var(--text-2);line-height:1.5}
+.policy-context-bar strong{color:var(--text);font-weight:600}
+.policy-tag{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--gold-dim);border:1px solid rgba(200,169,107,0.2);color:var(--gold);margin:2px 2px 0 0}
+/* SUMMARY */
+.summary-panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow-sm)}
+.summary-section-label{font-size:.75rem;letter-spacing:1.8px;text-transform:uppercase;color:var(--text-3);font-weight:500;margin:0 0 8px}
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;min-height:20px}
+.pill{padding:7px 14px;border-radius:999px;background:var(--gold-dim);border:1px solid rgba(200,169,107,0.25);color:var(--gold-light);font-size:.84rem;font-weight:500}
+.pill.role-pill{background:var(--surface-2);border-color:var(--border);color:var(--text-2);font-size:.78rem}
+.pill.strategy-pill{background:rgba(200,169,107,0.08);border-color:rgba(200,169,107,0.3);color:var(--gold);font-style:italic;font-size:.82rem}
+[data-theme="light"] .pill,[data-theme="light"] .pill.strategy-pill{color:var(--gold)}
+.summary-divider{height:1px;background:var(--border);margin:14px 0}
+.summary-text{color:var(--text-2);font-size:.93rem;margin:8px 0 0;line-height:1.6}
+.selection-msg{margin-top:12px;min-height:22px;font-size:.88rem}
+.msg-error{color:#f08b8b}.msg-success{color:#9fd5a6}
+/* BUTTONS */
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;align-items:center}
+.btn{appearance:none;border:none;cursor:pointer;font-family:var(--font-body);font-size:.95rem;border-radius:var(--radius-sm);padding:14px 24px;font-weight:600;transition:transform .15s,opacity .15s,background .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:translateY(0)}
+.btn-primary{background:var(--gold);color:#0f0f10}
+.btn-primary:hover{background:var(--gold-light);box-shadow:0 4px 20px rgba(200,169,107,0.3)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--border-hover)}
+.btn-ghost{background:transparent;color:var(--text-2);border:none;padding:14px 16px;font-size:.88rem}
+.btn-ghost:hover{color:var(--text);transform:none}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+/* LOADING */
+.loading-wrap{display:none;flex-direction:column;align-items:center;justify-content:center;padding:60px 0;gap:28px}
+.loading-wrap.active{display:flex}
+.loading-orbit{width:64px;height:64px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--gold);animation:spin 1s linear infinite}
+.loading-steps{display:flex;flex-direction:column;gap:8px;width:300px}
+.loading-step{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--text-3);transition:color .4s}
+.loading-step.active{color:var(--gold)}.loading-step.done{color:var(--text-2)}
+.step-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.loader-dots{display:flex;gap:10px;align-items:center}
+.loader-dots span{width:10px;height:10px;border-radius:50%;background:var(--gold);animation:bounce 1.2s ease-in-out infinite}
+.loader-dots span:nth-child(2){animation-delay:.2s}.loader-dots span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-12px);opacity:1}}
+/* RESPONSE */
+.response-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:36px;box-shadow:var(--shadow)}
+.response-empty{color:var(--text-3);font-size:.95rem;text-align:center;padding:40px 0}
+.response-content{display:none}
+.response-content.visible{display:block;animation:fadeUp .5s ease forwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.response-mentor-header{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+.response-avatars{display:flex}
+.response-avatar-img{width:42px;height:42px;border-radius:50%;overflow:hidden;border:2px solid var(--surface);outline:2px solid var(--gold);margin-right:-10px;flex-shrink:0}
+.response-avatar-img:last-child{margin-right:0}
+.response-board-name{font-size:.82rem;color:var(--text-2)}.response-board-title{font-weight:600;font-size:1rem;color:var(--text)}
+.guidance-block{margin-bottom:30px}
+.guidance-label{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px}
+.guidance-label::after{content:'';display:block;flex:1;height:1px;background:var(--border);width:40px}
+.voice-grid{display:flex;flex-direction:column;gap:12px}
+.voice-card{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.voice-avatar-img{width:38px;height:38px;border-radius:50%;overflow:hidden;border:1px solid rgba(200,169,107,0.3);flex-shrink:0}
+.voice-content{flex:1}.voice-name{font-size:.8rem;font-weight:600;color:var(--gold);margin-bottom:3px}
+.voice-text{font-size:.91rem;color:var(--text-2);line-height:1.55;margin:0}
+.context-badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.context-badge{padding:6px 14px;border-radius:999px;font-size:.78rem;font-weight:600;border:1px solid}
+.badge-strategy{background:rgba(200,169,107,0.1);border-color:rgba(200,169,107,0.3);color:var(--gold)}
+.badge-role{background:var(--surface-2);border-color:var(--border);color:var(--text-2)}
+.rec-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px}
+.rec-list li{display:flex;gap:16px;align-items:flex-start}
+.rec-num{min-width:28px;height:28px;border-radius:50%;background:var(--gold-dim);border:1px solid rgba(200,169,107,0.25);color:var(--gold);font-size:.82rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.rec-text{color:var(--text-2);font-size:.95rem;line-height:1.65}
+.step-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.step-list li{display:flex;gap:12px;align-items:flex-start;background:var(--surface-2);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 18px;border-left:3px solid var(--gold)}
+.step-arrow{color:var(--gold);font-size:1rem;flex-shrink:0;margin-top:1px}
+.step-text{color:var(--text-2);font-size:.95rem;line-height:1.55}
+.confidence-block{background:linear-gradient(135deg,var(--gold-dim),transparent);border:1px solid rgba(200,169,107,0.2);border-radius:var(--radius-sm);padding:24px;position:relative;overflow:hidden;margin-bottom:14px}
+.confidence-block::before{content:'"';position:absolute;top:-10px;left:10px;font-family:var(--font-display);font-size:100px;color:var(--gold);opacity:.1;line-height:1}
+.confidence-block p{font-family:var(--font-display);font-size:1.12rem;font-style:italic;color:var(--text);margin:0;line-height:1.55;position:relative}
+.action-block{background:var(--surface-2);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:20px 22px;display:flex;gap:14px;align-items:flex-start}
+.action-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.action-text{font-size:.97rem;color:var(--text-2);line-height:1.6;margin:0}
+.resume-badge{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;padding:4px 12px;border-radius:999px;background:rgba(159,213,166,0.1);border:1px solid rgba(159,213,166,0.3);color:#9fd5a6;margin-bottom:16px}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0}
+.footer{padding:36px 0 48px;text-align:center;color:var(--text-3);font-size:.88rem}
+@media(max-width:1000px){.mentor-grid,.role-grid{grid-template-columns:repeat(2,1fr)}.playbook-grid{grid-template-columns:1fr}}
+@media(max-width:960px){.hero-grid,.form-layout{grid-template-columns:1fr}}
+@media(max-width:600px){.mentor-grid,.role-grid{grid-template-columns:1fr}.playbook-grid{grid-template-columns:1fr}.hero-card,.panel,.summary-panel,.response-wrap{padding:20px}.stat-grid{grid-template-columns:1fr 1fr}.gs-grid{grid-template-columns:repeat(5,1fr)}}
+
+/* ═══ BLACK OFFICE UNLOCKED NAVBAR ═══ */
+.bou-navbar{width:100%;background:var(--surface);border-bottom:1px solid var(--border);padding:14px 0;position:sticky;top:0;z-index:200;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.bou-navbar-inner{display:flex;align-items:center;justify-content:space-between;width:min(1200px,92%);margin:0 auto;}
+.bou-logo-wrap{display:flex;align-items:center;gap:14px;}
+.bou-logo-img{height:52px;width:auto;border-radius:6px;filter:drop-shadow(0 0 10px rgba(255,255,255,0.55)) drop-shadow(0 0 22px rgba(255,255,255,0.35)) drop-shadow(0 0 4px rgba(255,255,255,0.8));transition:filter var(--transition);}
+.bou-logo-img:hover{filter:drop-shadow(0 0 14px rgba(255,255,255,0.75)) drop-shadow(0 0 28px rgba(255,255,255,0.5)) drop-shadow(0 0 6px rgba(255,255,255,1));}
+.bou-brand-text{display:flex;flex-direction:column;gap:1px;}
+.bou-brand-name{font-family:var(--font-display);font-size:1.05rem;letter-spacing:.04em;color:var(--text);line-height:1;}
+.bou-brand-tagline{font-size:.72rem;letter-spacing:.08em;color:var(--gold);text-transform:uppercase;font-weight:500;}
+.bou-navbar-badge{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;padding:5px 14px;border-radius:999px;background:var(--gold-dim);border:1px solid rgba(200,169,107,0.3);color:var(--gold);font-weight:600;letter-spacing:.04em;}
+.bou-navbar-badge::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* ═══ BLACK OFFICE UNLOCKED FOOTER ═══ */
+.bou-footer{background:var(--surface);border-top:1px solid var(--border);padding:40px 0 32px;}
+.bou-footer-inner{width:min(1200px,92%);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;}
+.bou-footer-logo{height:56px;width:auto;border-radius:6px;filter:drop-shadow(0 0 10px rgba(255,255,255,0.5)) drop-shadow(0 0 20px rgba(255,255,255,0.3)) drop-shadow(0 0 4px rgba(255,255,255,0.7));}
+.bou-footer-tagline{font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.bou-footer-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.bou-footer-links{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center;}
+.bou-footer-links a{font-size:.82rem;color:var(--text-2);transition:color var(--transition);letter-spacing:.02em;}
+.bou-footer-links a:hover{color:var(--gold);}
+.bou-footer-copy{font-size:.75rem;color:var(--text-3);}
+.bou-powered{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;color:var(--text-3);margin-top:4px;}
+
+@media(max-width:600px){.bou-navbar-badge{display:none;}.bou-logo-img,.bou-footer-logo{height:40px;}}
+</style>
+</head>
+<body>
+
+<!-- BLACK OFFICE UNLOCKED NAVBAR -->
+<nav class="bou-navbar">
+  <div class="bou-navbar-inner">
+    <div class="bou-logo-wrap">
+      <img src="BOUBoxLogo__1_.jpg" alt="Black Office Unlocked" class="bou-logo-img" onerror="this.style.display='none'"/>
+      <div class="bou-brand-text">
+        <span class="bou-brand-name">Black Office Unlocked</span>
+        <span class="bou-brand-tagline">Where Culture Meets Career Advice for Feds</span>
+      </div>
+    </div>
+    <div class="bou-navbar-badge">⚡ AIMAAS — AI Mentoring as a Service</div>
+  </div>
+</nav>
+
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+  <div class="theme-toggle-thumb" id="themeThumb">☀</div>
+</button>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div class="hero-card">
+      <div class="eyebrow">Career Clarity · Confidence · Strategy</div>
+      <h1>AI<span class="accent">MAAS</span></h1>
+      <p>AI Mentoring as a Service for career-minded federal professionals. Build your advisory board, define the mentorship roles you need, choose your career playbook strategy, and receive guidance grounded in your experience and current federal policy.</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num">1–3</div><p>Mentor personas for your advisory board</p></div>
+      <div class="stat-card"><div class="num">9</div><p>Mentor role types to define what you need</p></div>
+      <div class="stat-card"><div class="num">3</div><p>Mentee playbook strategies to match your situation</p></div>
+      <div class="stat-card"><div class="num">4+3</div><p>Strategic recommendations and next steps</p></div>
+    </div>
+  </div>
+</header>
+
+<div class="divider"></div>
+
+<main>
+
+<!-- STEP 1: MENTOR PERSONAS -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Step 1</div>
+      <h2>Build your mentor board</h2>
+      <p class="section-desc">Choose one, two, or three mentor personas. Each brings a distinct lens, voice, and strategy to your career challenge.</p>
+    </div>
+    <div class="mentor-grid" id="mentorGrid"></div>
+    <div class="selection-msg" id="selectionMsg"></div>
+  </div>
+</section>
+
+<!-- STEP 2: MENTOR ROLES -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Step 2</div>
+      <h2>Select your mentor roles</h2>
+      <p class="section-desc">Choose up to three roles that describe the type of mentorship support you need most right now. These nine roles are drawn from the research-based framework on career advancement through mentorship — each is distinct and situation-specific.</p>
+    </div>
+    <div class="role-grid" id="roleGrid"></div>
+    <div class="selection-msg" id="roleMsg"></div>
+  </div>
+</section>
+
+<!-- STEP 3: FORM + PLAYBOOK -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Step 3</div>
+      <h2>Tell us where you are</h2>
+      <p class="section-desc">Select your current career situation below, then fill in your details. Your playbook strategy anchors your entire mentorship plan.</p>
+    </div>
+
+    <div style="margin-bottom:32px">
+      <div style="font-size:.9rem;font-weight:600;color:var(--text);margin-bottom:6px">Mentee Playbook Strategy</div>
+      <div style="font-size:.88rem;color:var(--text-2);margin-bottom:18px;font-weight:300">Select the one that best reflects your current career situation. Use the same honest assessment you would share with a trusted mentor.</div>
+      <div class="playbook-grid" id="playbookGrid"></div>
+      <div class="selection-msg" id="playbookMsg"></div>
+    </div>
+
+    <div class="form-layout">
+      <div class="panel">
+        <div class="field">
+          <label for="userName">Your name</label>
+          <input type="text" id="userName" placeholder="Michael Gibbons" autocomplete="name"/>
+        </div>
+        <div class="field">
+          <label>GS Grade / Career Level</label>
+          <div class="gs-grid" id="gsGrid"></div>
+          <div class="gs-label-row" id="gsLabelRow">
+            <span class="gs-track-badge" data-track="entry">Entry (GS-2–4)</span>
+            <span class="gs-track-badge" data-track="early">Early Career (GS-5–8)</span>
+            <span class="gs-track-badge" data-track="mid">Mid-Career (GS-9–11)</span>
+            <span class="gs-track-badge" data-track="senior">Senior (GS-12–13)</span>
+            <span class="gs-track-badge" data-track="exec">Executive Track (GS-14–15)</span>
+          </div>
+          <input type="hidden" id="careerLevel"/>
+          <input type="hidden" id="gsGrade"/>
+        </div>
+        <div class="field">
+          <label>Agency or organization</label>
+          <div class="agency-search-wrap">
+            <input type="text" id="agencySearch" placeholder="Search top 40 agencies…" autocomplete="off" onfocus="openAgencyDropdown()" oninput="filterAgencies()"/>
+            <div class="agency-dropdown" id="agencyDropdown"></div>
+          </div>
+          <div class="agency-selected-pill" id="agencyPill">
+            <span id="agencyPillText"></span>
+            <button class="agency-clear" onclick="clearAgency()">✕ clear</button>
+          </div>
+          <div class="agency-manual-input" id="agencyManualWrap">
+            <input type="text" id="agencyManual" placeholder="Enter your agency name…" oninput="setManualAgency()"/>
+          </div>
+          <input type="hidden" id="agencyValue"/>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="field">
+          <label for="challenge">Current challenge</label>
+          <textarea id="challenge" placeholder="Example: I want to position myself for greater leadership opportunities, but I need more visibility and stronger executive communication."></textarea>
+        </div>
+        <div class="field">
+          <label for="goal">Primary goal</label>
+          <textarea id="goal" placeholder="Example: A clear strategy to increase my visibility, strengthen my leadership story, and prepare for a future executive role."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 4: RESUME -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Step 4 — Optional but Recommended</div>
+      <h2>Upload your résumé</h2>
+      <p class="section-desc">Your mentor board will draw directly from your résumé to make recommendations more specific and grounded in your actual background.</p>
+    </div>
+    <div class="panel" style="max-width:680px">
+      <div class="resume-drop" id="resumeDrop">
+        <input type="file" id="resumeFileInput" accept=".txt,.pdf,.doc,.docx"/>
+        <span class="resume-drop-icon">📄</span>
+        <div class="resume-drop-title">Drop your résumé here or click to browse</div>
+        <div class="resume-drop-sub">
+          Accepted: .txt, .pdf, .doc, .docx · Max 2 MB<br/>
+          <strong>⚠ Remove all PII before uploading:</strong> no home address, phone numbers, email address, Social Security Number, or other personal identifiers. Keep only professional history, accomplishments, education, and skills.
+        </div>
+        <div class="resume-file-name" id="resumeFileName"></div>
+        <div class="resume-processing" id="resumeProcessing"><div class="mini-spin"></div><span>Reading résumé…</span></div>
+      </div>
+      <button class="resume-clear-btn" id="resumeClearBtn">✕ Remove résumé</button>
+    </div>
+  </div>
+</section>
+
+<!-- STEP 5: SUMMARY + GENERATE -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Step 5</div>
+      <h2>Review and generate</h2>
+    </div>
+    <div class="summary-panel">
+      <div class="summary-section-label">Mentor Board</div>
+      <div class="pill-row" id="pillRowPersonas"></div>
+      <div class="summary-divider"></div>
+      <div class="summary-section-label">Mentor Roles Requested</div>
+      <div class="pill-row" id="pillRowRoles"></div>
+      <div class="summary-divider"></div>
+      <div class="summary-section-label">Mentee Playbook Strategy</div>
+      <div class="pill-row" id="pillRowStrategy"></div>
+      <div class="summary-divider"></div>
+      <p class="summary-text" id="summaryText">Complete the steps above to see your full configuration here.</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="generateBtn">Get My Mentorship Guidance</button>
+      <button class="btn btn-secondary" id="downloadBtn" disabled>Download Guidance</button>
+      <button class="btn btn-ghost" id="resetBtn">↺ Reset Form</button>
+    </div>
+    <div class="selection-msg" id="formMsg"></div>
+  </div>
+</section>
+
+<!-- OUTPUT -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-header">
+      <div class="eyebrow">Output</div>
+      <h2>Your AIMAAS guidance</h2>
+    </div>
+    <div class="response-wrap" id="responseWrap">
+      <div class="loading-wrap" id="loadingWrap">
+        <div class="loading-orbit"></div>
+        <div class="loading-steps" id="loadingSteps"></div>
+        <div class="loader-dots"><span></span><span></span><span></span></div>
+      </div>
+      <p class="response-empty" id="responseEmpty">Your mentorship guidance will appear here after you generate it.</p>
+      <div class="response-content" id="responseContent"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="divider"></div>
+
+<!-- BLACK OFFICE UNLOCKED BRANDED FOOTER -->
+<footer class="bou-footer">
+  <div class="bou-footer-inner">
+    <img src="BOUBoxLogo__1_.jpg" alt="Black Office Unlocked" class="bou-footer-logo" onerror="this.style.display='none'"/>
+    <div class="bou-footer-tagline">Where Culture Meets Career Advice for Feds</div>
+    <div class="bou-footer-divider"></div>
+    <div class="bou-footer-links">
+      <a href="https://www.linkedin.com/in/michael-landon-gibbons" target="_blank">LinkedIn</a>
+      <a href="mailto:blackofficeunlocked@gmail.com">Contact</a>
+      <a href="https://blackofficeunlocked.buzzsprout.com/share" target="_blank">Podcast</a>
+    </div>
+    <div class="bou-footer-copy">© 2025 Black Office, LLC · All Rights Reserved</div>
+    <div class="bou-powered">Powered by AIMAAS · AI Mentoring as a Service · Federal Career Edition</div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════
+   POLICY DATABASE — update quarterly
+   Add entries to policies[]; bump version.
+═══════════════════════════════════ */
+const POLICY_DB={
+  version:"2025-Q2",
+  policies:[
+    {id:"eo-workforce",title:"Federal Workforce Reduction & DOGE Initiative",date:"2025-01",tracks:["entry","early","mid","senior","exec"],summary:"Executive orders and DOGE directives have initiated significant federal workforce reductions, VSPs, deferred resignation programs, and agency reorganizations across most cabinet departments.",career_implications:"Documenting mission-critical contributions and building cross-agency visibility are more important than ever. Professionals who clearly articulate irreplaceable value to mission outcomes are better positioned to weather reorganizations.",action_guidance:"Create a robust accomplishment record now. Request explicit supervisor feedback on your mission-critical contributions. Align your work visibly to your agency's highest-priority programs."},
+    {id:"rto",title:"Federal Return-to-Office Mandate",date:"2025-01",tracks:["entry","early","mid","senior","exec"],summary:"A governmentwide return-to-office order has ended most remote work arrangements, requiring in-person presence at duty stations.",career_implications:"Physical visibility directly impacts informal networks, mentorship access, and the perception of engagement. Leaders who are visibly present and contributing in person gain informal career advantages.",action_guidance:"Use the return to office as a strategic networking opportunity. Volunteer for visible in-person projects and briefings."},
+    {id:"dei-eo",title:"Executive Order on DEI Programs",date:"2025-01",tracks:["entry","early","mid","senior","exec"],summary:"Executive orders have directed federal agencies to end DEI offices and related programs, with implications for diversity-focused career development programs and some mentoring initiatives.",career_implications:"Career development pathways previously supported through DEI programs may be restructured or discontinued. Professionals should identify alternative pathways through formal federal pipelines.",action_guidance:"Seek mentorship through formal federal leadership development programs (OPM, PMF, agency-specific pipelines) and build direct relationships with senior leaders."},
+    {id:"schedule-f",title:"Schedule F / Career Civil Service Reclassification",date:"2025-01",tracks:["senior","exec"],summary:"The reinstatement of Schedule F creates a new employment category for federal workers in policy-related positions, potentially reducing job protections for a significant subset of senior employees.",career_implications:"Senior professionals in policy-adjacent roles should understand their classification status and build a strong record of nonpartisan, mission-focused contributions.",action_guidance:"Consult with your HR office to understand your position classification. Maintain thorough records of your work products and contributions to agency mission."},
+    {id:"hiring-freeze",title:"Federal Hiring Freeze",date:"2025-01",tracks:["entry","early","mid","senior"],summary:"A broad federal civilian hiring freeze has limited new hires and created promotion bottlenecks at many agencies.",career_implications:"Traditional promotion pathways through vacancy announcements may be constrained. Acting assignments and detail opportunities become more important as alternative advancement mechanisms.",action_guidance:"Pursue acting and detail assignments as alternatives to formal promotions. Build visibility with decision-makers who can advocate for your advancement when the freeze lifts."},
+    {id:"opm-ecq",title:"OPM Federal Leadership Development & ECQ Framework",date:"2024-09",tracks:["mid","senior","exec"],summary:"OPM continues to emphasize the five Executive Core Qualifications (ECQs) as the framework for federal leadership development and SES selection.",career_implications:"Professionals targeting GS-14, GS-15, and SES positions should actively build and document evidence against the five ECQs. Formal leadership development programs provide structured pathways.",action_guidance:"Begin mapping your accomplishments to the five ECQs now. Identify which ECQs represent your strongest evidence and which require development."}
+  ],
+  getRelevantPolicies(gsTrack){return this.policies.filter(p=>p.tracks.includes(gsTrack)).slice(0,3);},
+  getSummaryForPrompt(gsTrack){return this.policies.filter(p=>p.tracks.includes(gsTrack)).map(p=>`POLICY: ${p.title} (${p.date})\nSummary: ${p.summary}\nCareer implications: ${p.career_implications}\nGuidance: ${p.action_guidance}`).join("\n\n");}
+};
+
+/* ═══ TOP 40 AGENCIES ═══ */
+const AGENCIES=[
+  {name:"Department of Defense (DoD)",size:"~700,000 civilian"},
+  {name:"U.S. Postal Service (USPS)",size:"~600,000"},
+  {name:"Department of Veterans Affairs (VA)",size:"~400,000"},
+  {name:"Department of the Army (Civilian)",size:"~250,000 civilian"},
+  {name:"Department of Homeland Security (DHS)",size:"~240,000"},
+  {name:"Department of the Navy",size:"~200,000 civilian"},
+  {name:"Department of the Air Force",size:"~170,000 civilian"},
+  {name:"Department of Justice (DOJ)",size:"~115,000"},
+  {name:"Internal Revenue Service (IRS)",size:"~80,000"},
+  {name:"Department of Health & Human Services (HHS)",size:"~80,000"},
+  {name:"Department of the Treasury",size:"~100,000"},
+  {name:"Department of Agriculture (USDA)",size:"~100,000"},
+  {name:"Department of State",size:"~75,000"},
+  {name:"Department of the Interior (DOI)",size:"~70,000"},
+  {name:"U.S. Customs & Border Protection (CBP)",size:"~60,000"},
+  {name:"Social Security Administration (SSA)",size:"~60,000"},
+  {name:"Department of Transportation (DOT)",size:"~55,000"},
+  {name:"Federal Aviation Administration (FAA)",size:"~45,000"},
+  {name:"Department of Commerce",size:"~47,000"},
+  {name:"Army Corps of Engineers",size:"~37,000"},
+  {name:"Federal Bureau of Investigation (FBI)",size:"~35,000"},
+  {name:"Bureau of Prisons (BOP)",size:"~35,000"},
+  {name:"National Security Agency (NSA)",size:"~30,000 est."},
+  {name:"National Institutes of Health (NIH)",size:"~20,000"},
+  {name:"U.S. Immigration & Customs Enforcement (ICE)",size:"~20,000"},
+  {name:"NASA",size:"~18,000"},
+  {name:"Defense Intelligence Agency (DIA)",size:"~16,500"},
+  {name:"Department of Energy (DOE)",size:"~15,000"},
+  {name:"Department of Labor (DOL)",size:"~15,000"},
+  {name:"Environmental Protection Agency (EPA)",size:"~15,000"},
+  {name:"Drug Enforcement Administration (DEA)",size:"~10,000"},
+  {name:"Centers for Disease Control & Prevention (CDC)",size:"~10,000"},
+  {name:"Defense Logistics Agency (DLA)",size:"~26,000"},
+  {name:"General Services Administration (GSA)",size:"~11,000"},
+  {name:"Department of Housing & Urban Development (HUD)",size:"~8,000"},
+  {name:"Centers for Medicare & Medicaid Services (CMS)",size:"~6,500"},
+  {name:"Department of Education",size:"~4,000"},
+  {name:"Small Business Administration (SBA)",size:"~3,500"},
+  {name:"Office of Personnel Management (OPM)",size:"~3,000"},
+  {name:"Nuclear Regulatory Commission (NRC)",size:"~3,000"},
+];
+
+/* ═══ 9 MENTOR ROLES ═══ */
+const MENTOR_ROLES=[
+  {id:"coach",num:1,name:"Coach or Adviser",desc:"These relationships focus on task and performance-related skills and work competencies."},
+  {id:"sponsor",num:2,name:"Sponsor",desc:"These relations provide career-focused support for advancement in the organization or within the profession."},
+  {id:"advocate",num:3,name:"Advocate",desc:"This is often an 'invisible' mentoring function; it provides protection from negative career outcomes or consequences within your organization."},
+  {id:"investor",num:4,name:"Investor",desc:"These types of mentors make investments in your career by helping protégés gain access to stretch opportunities that allow people to see your skills and knowledge."},
+  {id:"networker",num:5,name:"Networker",desc:"These mentors connect you to opportunities that expand your networks and support your access to important people who can support your goals."},
+  {id:"role-model",num:6,name:"Role Model",desc:"These mentors provide an example of valued norms or competencies."},
+  {id:"supporter",num:7,name:"Supporter",desc:"These mentors validate your skills, experience, and overall value to the organization."},
+  {id:"sounding-board",num:8,name:"Sounding Board",desc:"These mentors listen to you and sometimes provide advice on professional and personal issues."},
+  {id:"ally",num:9,name:"Ally",desc:"The allyship of these mentors supports you and your career."},
+];
+
+/* ═══ 3 PLAYBOOK STRATEGIES ═══ */
+const PLAYBOOK_STRATEGIES=[
+  {
+    id:"stay-slay",title:"Stay + Slay",icon:"🏠",icon2:"",
+    subtitle:"I'm staying — and leveling up in place",
+    desc:"You intend to remain in your current role or organization and want to maximize your growth, visibility, and advancement from where you are.",
+    bullets:[
+      {text:"Communicate intentions to supervisor",bold:false},
+      {text:"ID influential internal mentor",bold:false},
+      {text:"Layout framework of your plan for mentor review",bold:true},
+      {text:"ID skills needed to move up",bold:true},
+      {text:"Open & receptive to honest feedback",bold:false},
+    ]
+  },
+  {
+    id:"stay-switch",title:"Stay + Switch",icon:"🏠",icon2:"📶",
+    subtitle:"I'm staying in government — but changing lanes",
+    desc:"You plan to remain in the federal government but want to transition to a different role, office, or agency that better aligns with your goals.",
+    bullets:[
+      {text:"Communicate intentions to supervisor (w/ caveat)",bold:false},
+      {text:"Document plans on IDP",bold:false},
+      {text:"ID influential internal & external mentor",bold:false},
+      {text:"Establish connections w/ hiring mgrs in interested areas",bold:true},
+      {text:"Open & receptive to honest feedback",bold:false},
+    ]
+  },
+  {
+    id:"level-leave",title:"Level Up + Leave",icon:"🚪",icon2:"",
+    subtitle:"I'm building toward an exit — on my terms",
+    desc:"You are intentionally preparing for a transition out of your current organization, building the skills, connections, and narrative to make your next move with confidence.",
+    bullets:[
+      {text:"Communicate intentions to supervisor (w/ caveat)",bold:false},
+      {text:"ID influential internal & external mentor",bold:false},
+      {text:"Establish connections w/ hiring mgrs in interested areas",bold:true},
+      {text:"Layout framework of transition plan for mentor review",bold:false},
+      {text:"Open & receptive to honest feedback",bold:true},
+    ]
+  },
+];
+
+/* ═══ SVG PORTRAITS ═══ */
+const PORTRAITS={
+  strategist:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#1a2744"/><ellipse cx="40" cy="52" rx="22" ry="16" fill="#c0845a"/><circle cx="40" cy="30" r="16" fill="#c0845a"/><ellipse cx="40" cy="28" rx="16" ry="10" fill="#3a2210"/><path d="M24 28 Q40 18 56 28" fill="#3a2210"/><ellipse cx="34" cy="32" rx="3" ry="3.5" fill="#1a1006"/><ellipse cx="46" cy="32" rx="3" ry="3.5" fill="#1a1006"/><path d="M35 38 Q40 42 45 38" stroke="#8a4a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/><rect x="18" y="52" width="44" height="28" rx="4" fill="#1e3a6e"/><rect x="28" y="54" width="24" height="4" rx="2" fill="#c8a96b" opacity="0.6"/></svg>`,
+  "executive-coach":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#1a3030"/><ellipse cx="40" cy="52" rx="22" ry="16" fill="#8B5E3C"/><circle cx="40" cy="30" r="16" fill="#8B5E3C"/><path d="M24 26 Q40 14 56 26 Q56 16 40 12 Q24 16 24 26Z" fill="#1a0a00"/><ellipse cx="34" cy="32" rx="3" ry="3.5" fill="#1a0a00"/><ellipse cx="46" cy="32" rx="3" ry="3.5" fill="#1a0a00"/><path d="M36 38 Q40 43 44 38" stroke="#5a2a10" stroke-width="1.5" fill="none" stroke-linecap="round"/><rect x="18" y="52" width="44" height="28" rx="4" fill="#2d4a3e"/><path d="M32 54 L40 60 L48 54" stroke="#c8a96b" stroke-width="2" fill="none"/><rect x="37" y="60" width="6" height="8" fill="#c8a96b" opacity="0.5"/></svg>`,
+  "federal-navigator":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#2a1a3a"/><ellipse cx="40" cy="52" rx="22" ry="16" fill="#d4a574"/><circle cx="40" cy="30" r="16" fill="#d4a574"/><path d="M24 30 Q28 16 40 14 Q52 16 56 30 Q52 20 40 18 Q28 20 24 30Z" fill="#5a3a1a"/><ellipse cx="34" cy="31" rx="3" ry="3.5" fill="#2a1a0a"/><ellipse cx="46" cy="31" rx="3" ry="3.5" fill="#2a1a0a"/><path d="M36 38 Q40 42 44 38" stroke="#8a5a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/><rect x="18" y="52" width="44" height="28" rx="4" fill="#3d2a5e"/><circle cx="40" cy="64" r="6" fill="none" stroke="#c8a96b" stroke-width="1.5"/><path d="M40 58 L40 70 M34 64 L46 64" stroke="#c8a96b" stroke-width="1.5"/></svg>`,
+  "confidence-builder":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#2a1a20"/><ellipse cx="40" cy="52" rx="22" ry="16" fill="#e8c4a0"/><circle cx="40" cy="30" r="16" fill="#e8c4a0"/><ellipse cx="40" cy="20" rx="15" ry="8" fill="#8b4513" opacity="0.9"/><path d="M25 26 Q40 12 55 26" fill="#8b4513"/><ellipse cx="33" cy="32" rx="3" ry="3.5" fill="#2a1a0a"/><ellipse cx="47" cy="32" rx="3" ry="3.5" fill="#2a1a0a"/><path d="M35 39 Q40 44 45 39" stroke="#9a5a3a" stroke-width="1.5" fill="none" stroke-linecap="round"/><rect x="18" y="52" width="44" height="28" rx="4" fill="#4a2a38"/><path d="M33 62 Q40 56 47 62 Q40 70 33 62Z" fill="#c8a96b" opacity="0.7"/></svg>`,
+  "network-architect":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#1a2a1a"/><ellipse cx="40" cy="52" rx="22" ry="16" fill="#f0d0a0"/><circle cx="40" cy="30" r="16" fill="#f0d0a0"/><path d="M24 24 Q40 10 56 24 L56 28 Q40 16 24 28Z" fill="#2a1400"/><path d="M26 28 Q28 18 40 16 Q52 18 54 28" fill="#2a1400"/><ellipse cx="34" cy="32" rx="3" ry="3.5" fill="#1a1000"/><ellipse cx="46" cy="32" rx="3" ry="3.5" fill="#1a1000"/><path d="M35 39 Q40 43 45 39" stroke="#aa7040" stroke-width="1.5" fill="none" stroke-linecap="round"/><rect x="18" y="52" width="44" height="28" rx="4" fill="#1e3a20"/><circle cx="33" cy="62" r="3" fill="none" stroke="#c8a96b" stroke-width="1.2"/><circle cx="47" cy="62" r="3" fill="none" stroke="#c8a96b" stroke-width="1.2"/><circle cx="40" cy="57" r="3" fill="none" stroke="#c8a96b" stroke-width="1.2"/><line x1="36" y1="60" x2="44" y2="60" stroke="#c8a96b" stroke-width="1"/><line x1="35" y1="58" x2="38" y2="60" stroke="#c8a96b" stroke-width="1"/><line x1="45" y1="58" x2="42" y2="60" stroke="#c8a96b" stroke-width="1"/></svg>`,
+  "learning-accelerator":`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><circle cx="40" cy="40" r="40" fill="#1a1a2a"/><ellipse cx="40" cy="52" rx="22" ry="16" fill="#c8a090"/><circle cx="40" cy="30" r="16" fill="#c8a090"/><path d="M24 28 Q30 14 40 12 Q50 14 56 28 Q52 16 40 14 Q28 16 24 28Z" fill="#4a2a20"/><ellipse cx="34" cy="32" rx="3" ry="3.5" fill="#1a0a00"/><ellipse cx="46" cy="32" rx="3" ry="3.5" fill="#1a0a00"/><path d="M36 39 Q40 44 44 39" stroke="#7a3a20" stroke-width="1.5" fill="none" stroke-linecap="round"/><rect x="18" y="52" width="44" height="28" rx="4" fill="#2a2a4a"/><path d="M30 66 L32 60 L38 64 L40 57 L42 64 L48 60 L50 66Z" fill="#c8a96b" opacity="0.6"/></svg>`
+};
+
+/* ═══ MENTOR PERSONAS ═══ */
+const MENTORS=[
+  {id:"strategist",initials:"TS",name:"The Strategist",title:"Career Positioning Advisor",specialty:"Long-term growth, career planning, differentiation, opportunity mapping",style:"Strategic · Measured · Big-picture",summary:"Thinks three moves ahead. Helps you see the full chessboard of your career and make deliberate, high-value positioning decisions.",voice:{opener:"Let's slow down and look at the full picture before you take your next step.",recs:[v=>`${v.userName}, at the ${v.careerLevel} level${v.resumeContext?", and based on your résumé,":""}, your most powerful move is to identify your career's north star — a specific role two to three levels ahead — and reverse-engineer every gap between here and there.`,v=>`Your differentiation is your career insurance. Inside ${v.agency}, dozens share similar titles. ${v.resumeContext?"Your résumé suggests unique strengths worth making explicit — w":"W"}hat capability or track record is genuinely and only yours?`,v=>`Opportunity favors the prepared. Map the next six months: which high-visibility projects align with where you want to go? Position yourself before they are announced.`,v=>`At the ${v.careerLevel} level, your most underused asset is your informal network. Identify three decision-makers one to two levels above you. A 20-minute conversation with the right person moves faster than six months of effort alone.`],steps:[v=>`Write a one-page career compass — your target role, why you want it, and the three biggest gaps between here and there. Review it monthly.`,v=>`Identify two colleagues at ${v.agency} who hold the role or influence you're building toward and request a focused 20-minute conversation.`,v=>`Block two hours this month to audit your last 12 months of work. Map every high-impact contribution to a mission outcome at ${v.agency}.`],confidence:v=>`${v.userName}, the professionals who move fastest are rarely the most talented — they're the most intentional. You already have the raw material. Strategy is how it becomes something unmissable.`,action:v=>`This week, write down your target next role and the single biggest gap standing between you and it. That gap is now your project.`}},
+  {id:"executive-coach",initials:"EC",name:"The Executive Coach",title:"Leadership & Communication Advisor",specialty:"Executive presence, visibility, communication, leadership brand",style:"Polished · Direct · Executive-minded",summary:"Sharpens how you show up. Helps you communicate with authority, build a leadership brand, and be remembered in the rooms that matter.",voice:{opener:"Executives are remembered for clarity, calm, and conviction — let's build all three.",recs:[v=>`${v.userName}, the gap between where you are and executive-level influence is often less about what you've done and more about how clearly you communicate it. Shift from responsibilities to outcomes: "I reduced turnaround time by 30%" rather than "I managed the process."`,v=>`At ${v.agency}, the people who advance fastest are those whose names surface when opportunities arise. ${v.resumeContext?"Your résumé shows a track record worth making more visible — v":"V"}isibility is deliberate: high-stakes meetings, incisive questions, follow-up with insight.`,v=>`Your leadership brand is forming whether you're intentional or not. Decide what you want to be known for — one or two clear themes — and ensure everything you present reinforces those themes consistently.`,v=>`Executive readiness is signaled long before a promotion decision is made. Begin operating at the next level now: take ownership of problems outside your lane.`],steps:[v=>`Draft a 90-second executive introduction — who you are, what you lead, and the results you drive. Practice it until it flows without notes.`,v=>`Before your next senior meeting, prepare one well-researched observation that signals strategic thinking.`,v=>`Identify one senior leader at ${v.agency} you respect and request a 15-minute conversation focused on what they look for in the people they promote.`],confidence:v=>`${v.userName}, executive presence isn't a personality trait — it's a practice. You build it one clear sentence, one confident room, one well-placed insight at a time.`,action:v=>`Before your next meeting, write the one sentence you want decision-makers to walk away remembering about your work. Then make sure you say it.`}},
+  {id:"federal-navigator",initials:"FN",name:"The Federal Navigator",title:"Federal Career Growth Advisor",specialty:"Promotion strategy, performance narratives, internal culture, government advancement",style:"Practical · Tactical · Federal-savvy",summary:"Knows the federal terrain inside out. Packages your impact in government language and moves you forward strategically within the system.",voice:{opener:"The federal system rewards those who make impact visible and measurable — let's make yours undeniable.",recs:[v=>`${v.userName}, inside ${v.agency}, your performance narrative is your most underutilized career asset. ${v.resumeContext?"Your résumé contains accomplishments worth repackaging in mission-connected language — c":"C"}onnect every win to mission readiness, cost efficiency, or enterprise-level impact.`,v=>`At the ${v.careerLevel} level, federal promotions follow a pattern of deliberate documentation and relationship equity with the right people. Begin capturing wins now — not at review time.`,v=>`Cross-functional projects, interagency details, and developmental assignments signal readiness for greater responsibility and expose you to the informal networks that drive promotion decisions.`,v=>`The narrative you write for your next performance appraisal is your single most powerful document. Begin drafting it now using Challenge-Action-Result language for every major contribution.`],steps:[v=>`Write three CAR-format accomplishment statements — Challenge, Action, Result — from the last six months. Make each one mission-connected and number-backed.`,v=>`Identify one upcoming cross-functional project or leadership development program at ${v.agency} and make a specific plan to be considered or selected.`,v=>`Review your most recent position description and identify two areas where your contributions already exceed the stated requirements. Document those now.`],confidence:v=>`${v.userName}, the federal system has a path forward for every career — but it doesn't always make that path obvious. You're building the map. Keep going.`,action:v=>`Open a document today and write your first CAR accomplishment statement from the last 90 days. The habit of documenting your impact starts now.`}},
+  {id:"confidence-builder",initials:"CB",name:"The Confidence Builder",title:"Mindset & Self-Advocacy Advisor",specialty:"Confidence, self-advocacy, resilience, clarity under pressure",style:"Grounded · Encouraging · Empowering",summary:"Centers the human behind the professional. Helps you move with more conviction and advocate for yourself without hesitation.",voice:{opener:"Before the strategy, the narrative, and the next step — there's you. Let's make sure you're in your own corner.",recs:[v=>`${v.userName}, the biggest obstacle between you and your next level often isn't external. ${v.resumeContext?"The experience in your résumé is more substantial than you may be giving yourself credit for — m":"M"}ost high-achieving federal professionals at the ${v.careerLevel} stage underestimate what they've already built.`,v=>`Self-advocacy isn't arrogance — it's clarity. When you speak about your work in vague or overly modest terms, you make it harder for decision-makers to see your value. Practice: "I led that initiative" instead of "I was involved."`,v=>`Build a resilience ritual. The path forward will include setbacks. Decide now how you'll respond. Momentum belongs to professionals who keep moving with intention even when the environment doesn't cooperate.`,v=>`Your voice matters in rooms where decisions are made. Practice speaking first — not last — in team discussions where you have relevant perspective. Contributing early shapes how others experience your leadership.`],steps:[v=>`Write a private evidence inventory — list ten specific things you've accomplished, led, or improved in the past year. Read it before your next high-stakes conversation.`,v=>`Practice one direct self-advocacy statement this week — something you've done or improved, stated without hedging — and deliver it to a trusted colleague or supervisor.`,v=>`Identify one meeting this week where you will speak within the first five minutes. Prepare your contribution in advance.`],confidence:v=>`${v.userName}, you do not need to wait for permission, perfect conditions, or full certainty to move forward. Clarity comes through action. Confidence comes through evidence. You're already building both.`,action:v=>`Today, write one sentence describing your biggest professional win from the last six months — without any hedging or qualifiers. Own it completely. That sentence is the start of your self-advocacy practice.`}},
+  {id:"network-architect",initials:"NA",name:"The Network Architect",title:"Relationships & Influence Advisor",specialty:"Strategic networking, sponsorship, peer influence, career capital",style:"Connected · Intentional · Human-centered",summary:"Maps the relationships that matter. Builds the strategic connections and sponsor relationships that turn ambition into opportunity.",voice:{opener:"Every career breakthrough I've seen traces back to a relationship that was built before it was needed.",recs:[v=>`${v.userName}, at the ${v.careerLevel} level, your network is your most durable career asset. The right relationship at ${v.agency} can compress years of development into months.`,v=>`There's a critical difference between a mentor and a sponsor. Mentors give advice. Sponsors spend political capital on your behalf. ${v.resumeContext?"Based on your background, you are likely ready for a sponsor relationship — i":"I"}dentify one senior leader at ${v.agency} with visibility into your work and the influence to advocate for your advancement.`,v=>`Your peer network is your early warning system. The colleagues at your level today will be the decision-makers of tomorrow. Invest in those relationships with the same intentionality you bring to relationships above you.`,v=>`Strategic visibility requires being known across functions, not just within your own directorate. Find one cross-functional working group where your expertise would be noticed.`],steps:[v=>`Map your network in three tiers: decision-makers above you, peers at your level, and emerging professionals below. Identify one gap in each tier to invest in this month.`,v=>`Reach out to one person outside your immediate team at ${v.agency} this week — a brief message, a shared resource, or a request for a 15-minute conversation.`,v=>`Identify one senior leader at ${v.agency} whose work intersects yours. Look for one genuine opportunity to add value before you ever ask for anything.`],confidence:v=>`${v.userName}, you don't have to earn your way into every room alone. The right relationships make the path shorter, clearer, and less isolating. Building them is not networking — it's leadership.`,action:v=>`This week, send one message to someone in your network you haven't spoken to in 60 days. Ask how they're doing, share something useful, and remind them you exist.`}},
+  {id:"learning-accelerator",initials:"LA",name:"The Learning Accelerator",title:"Skills, Growth & Readiness Advisor",specialty:"Skill-building, leadership development, continuous learning, readiness planning",style:"Curious · Rigorous · Forward-leaning",summary:"Closes the gap between where you are and where you're going through intentional skill-building and targeted development.",voice:{opener:"The fastest path to your next level runs directly through the skills you're building — or not building — right now.",recs:[v=>`${v.userName}, at the ${v.careerLevel} level${v.resumeContext?", and given your résumé background,":""} there is almost certainly a specific skill gap standing between your current performance and your next opportunity. Name it clearly. Vague development goals produce vague results.`,v=>`Federal leadership development programs — OPM offerings, agency-specific pipelines, and interagency programs — are chronically underutilized by the professionals who would benefit most. At ${v.agency}, formal pathways are worth pursuing deliberately rather than waiting to be nominated.`,v=>`The highest-leverage learning you can do is experiential, not instructional. Seek assignments or acting roles that stretch your capability ceiling.`,v=>`Build a personal learning system: a consistent practice of reading, reflecting, and applying new insight to your current challenges. Even 30 minutes per week of deliberate, focused learning compounds powerfully over a career.`],steps:[v=>`Identify the top two competencies required for your target next role at ${v.agency}. For each, name one action you'll take in the next 30 days to close the gap.`,v=>`Research one formal leadership development program available through ${v.agency} or OPM. Identify the application window and what you'd need for a strong nomination package.`,v=>`Find one stretch assignment you can take on in the next 60 days — something slightly beyond your current scope — that gives you documented experience your target role requires.`],confidence:v=>`${v.userName}, every skill you build today is compounding silently in the background. The gap between where you are and where you want to be closes every time you invest in your growth with intention.`,action:v=>`Today, name the one skill that would most change your career trajectory if you developed it over the next 12 months. Write it down. Then identify the first step you'll take this week to begin building it.`}}
+];
+
+const GS_GRADES=[2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+const GS_TRACK={2:"entry",3:"entry",4:"entry",5:"early",6:"early",7:"early",8:"early",9:"mid",10:"mid",11:"mid",12:"senior",13:"senior",14:"exec",15:"exec"};
+const GS_CAREER_LABEL={entry:"Entry-Level",early:"Early Career",mid:"Mid-Career",senior:"Senior Professional",exec:"Executive Track"};
+
+/* ═══ STATE ═══ */
+const selectedPersonas=new Set();
+const selectedRoles=new Set();
+let selectedStrategy=null;
+let lastGuidanceText="",resumeText="",selectedGS=null,pickedAgency="";
+let theme=localStorage.getItem("aimaas_theme")||"dark";
+document.documentElement.setAttribute("data-theme",theme);
+updateThumbIcon();
+
+/* ═══ ELEMENTS ═══ */
+const responseEmpty=document.getElementById("responseEmpty");
+const responseContent=document.getElementById("responseContent");
+const loadingWrap=document.getElementById("loadingWrap");
+const loadingSteps=document.getElementById("loadingSteps");
+const generateBtn=document.getElementById("generateBtn");
+const downloadBtn=document.getElementById("downloadBtn");
+const resetBtn=document.getElementById("resetBtn");
+const formMsg=document.getElementById("formMsg");
+
+/* ═══ THEME ═══ */
+document.getElementById("themeToggle").addEventListener("click",()=>{theme=theme==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",theme);localStorage.setItem("aimaas_theme",theme);updateThumbIcon();});
+function updateThumbIcon(){document.getElementById("themeThumb").textContent=theme==="dark"?"☀":"☽";}
+
+/* ═══ GS ═══ */
+function renderGSGrid(){const grid=document.getElementById("gsGrid");grid.innerHTML="";GS_GRADES.forEach(gs=>{const btn=document.createElement("button");btn.className="gs-btn"+(selectedGS===gs?" active":"");btn.textContent=`GS-${gs}`;btn.type="button";btn.addEventListener("click",()=>selectGS(gs));grid.appendChild(btn);});updateGSBadges();}
+function selectGS(gs){selectedGS=gs;document.getElementById("careerLevel").value=`${GS_CAREER_LABEL[GS_TRACK[gs]]} (GS-${gs})`;document.getElementById("gsGrade").value=gs;renderGSGrid();saveForm();}
+function updateGSBadges(){const track=selectedGS?GS_TRACK[selectedGS]:null;document.querySelectorAll(".gs-track-badge").forEach(b=>b.classList.toggle("active",b.dataset.track===track));}
+
+/* ═══ AGENCY ═══ */
+function openAgencyDropdown(){renderAgencyDropdown("");}
+function filterAgencies(){renderAgencyDropdown(document.getElementById("agencySearch").value);}
+function renderAgencyDropdown(q){
+  const dd=document.getElementById("agencyDropdown");const lower=q.toLowerCase();
+  const filtered=q?AGENCIES.filter(a=>a.name.toLowerCase().includes(lower)):AGENCIES;
+  let html=`<div class="agency-group-label">Top 40 Federal Agencies</div>`;
+  filtered.forEach(a=>{const safe=q.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");const hl=q?a.name.replace(new RegExp(`(${safe})`,"gi"),"<strong>$1</strong>"):a.name;html+=`<div class="agency-option${pickedAgency===a.name?" selected-opt":""}" onclick="pickAgency('${a.name.replace(/'/g,"\\'")}')"><span>${hl}</span><span class="agency-size">${a.size}</span></div>`;});
+  html+=`<div class="agency-group-label">Other</div><div class="agency-manual-row" onclick="showAgencyManual()">Enter agency manually →</div>`;
+  dd.innerHTML=html;dd.classList.add("open");
+}
+function pickAgency(name){pickedAgency=name;document.getElementById("agencyValue").value=name;document.getElementById("agencySearch").value="";document.getElementById("agencyDropdown").classList.remove("open");document.getElementById("agencyManualWrap").classList.remove("visible");document.getElementById("agencyPillText").textContent=name;document.getElementById("agencyPill").classList.add("visible");saveForm();}
+function clearAgency(){pickedAgency="";document.getElementById("agencyValue").value="";document.getElementById("agencySearch").value="";document.getElementById("agencyPill").classList.remove("visible");document.getElementById("agencyManualWrap").classList.remove("visible");document.getElementById("agencyDropdown").classList.remove("open");saveForm();}
+function showAgencyManual(){document.getElementById("agencyDropdown").classList.remove("open");document.getElementById("agencyManualWrap").classList.add("visible");setTimeout(()=>document.getElementById("agencyManual").focus(),50);}
+function setManualAgency(){const val=document.getElementById("agencyManual").value.trim();pickedAgency=val;document.getElementById("agencyValue").value=val;if(val){document.getElementById("agencyPillText").textContent=val;document.getElementById("agencyPill").classList.add("visible");}else document.getElementById("agencyPill").classList.remove("visible");saveForm();}
+document.addEventListener("click",e=>{if(!e.target.closest(".agency-search-wrap")&&!e.target.closest(".agency-manual-input"))document.getElementById("agencyDropdown").classList.remove("open");});
+
+/* ═══ LOCAL STORAGE ═══ */
+const LS_KEY="aimaas_form_v4";
+function saveForm(){localStorage.setItem(LS_KEY,JSON.stringify({userName:document.getElementById("userName").value,careerLevel:document.getElementById("careerLevel").value,gsGrade:selectedGS,agency:pickedAgency,challenge:document.getElementById("challenge").value,goal:document.getElementById("goal").value,selectedPersonas:[...selectedPersonas],selectedRoles:[...selectedRoles],selectedStrategy}));}
+function loadForm(){const raw=localStorage.getItem(LS_KEY);if(!raw)return;try{const d=JSON.parse(raw);if(d.userName)document.getElementById("userName").value=d.userName;if(d.challenge)document.getElementById("challenge").value=d.challenge;if(d.goal)document.getElementById("goal").value=d.goal;if(d.gsGrade){selectedGS=d.gsGrade;document.getElementById("careerLevel").value=d.careerLevel||"";}if(d.agency){pickedAgency=d.agency;document.getElementById("agencyValue").value=d.agency;document.getElementById("agencyPillText").textContent=d.agency;document.getElementById("agencyPill").classList.add("visible");}if(d.selectedPersonas)d.selectedPersonas.forEach(id=>selectedPersonas.add(id));if(d.selectedRoles)d.selectedRoles.forEach(id=>selectedRoles.add(id));if(d.selectedStrategy)selectedStrategy=d.selectedStrategy;}catch(e){}}
+["userName","challenge","goal"].forEach(id=>document.getElementById(id).addEventListener("input",saveForm));
+
+/* ═══ RESUME ═══ */
+const resumeDrop=document.getElementById("resumeDrop");const resumeFileInput=document.getElementById("resumeFileInput");const resumeFileName=document.getElementById("resumeFileName");const resumeProcessing=document.getElementById("resumeProcessing");const resumeClearBtn=document.getElementById("resumeClearBtn");
+resumeDrop.addEventListener("click",e=>{if(e.target===resumeClearBtn)return;resumeFileInput.click();});
+resumeFileInput.addEventListener("change",()=>{if(resumeFileInput.files[0])handleResumeFile(resumeFileInput.files[0]);});
+resumeDrop.addEventListener("dragover",e=>{e.preventDefault();resumeDrop.classList.add("dragover");});
+resumeDrop.addEventListener("dragleave",()=>resumeDrop.classList.remove("dragover"));
+resumeDrop.addEventListener("drop",e=>{e.preventDefault();resumeDrop.classList.remove("dragover");if(e.dataTransfer.files[0])handleResumeFile(e.dataTransfer.files[0]);});
+resumeClearBtn.addEventListener("click",e=>{e.stopPropagation();resumeText="";resumeFileName.textContent="";resumeDrop.classList.remove("has-file");resumeClearBtn.style.display="none";resumeFileInput.value="";});
+function handleResumeFile(file){if(file.size>2*1024*1024){alert("File too large. Please keep under 2 MB.");return;}resumeProcessing.classList.add("active");const reader=new FileReader();reader.onload=e=>{resumeText=e.target.result;resumeProcessing.classList.remove("active");resumeDrop.classList.add("has-file");resumeFileName.textContent=`✓ ${file.name} (${(file.size/1024).toFixed(0)} KB)`;resumeClearBtn.style.display="inline-block";};reader.onerror=()=>{resumeProcessing.classList.remove("active");alert("Could not read file. Try a .txt version.");};if(file.type==="text/plain")reader.readAsText(file);else reader.readAsDataURL(file);}
+
+/* ═══ RENDER MENTORS ═══ */
+function renderMentors(){document.getElementById("mentorGrid").innerHTML="";const maxed=selectedPersonas.size>=3;MENTORS.forEach(m=>{const isSel=selectedPersonas.has(m.id);const card=document.createElement("div");card.className="mentor-card"+(isSel?" selected":"")+(!isSel&&maxed?" maxed":"");card.innerHTML=`<div class="check-badge"><svg viewBox="0 0 14 14"><polyline points="2,7 5.5,10.5 12,3"/></svg></div><div style="display:flex;align-items:center;gap:12px"><div class="mentor-portrait">${PORTRAITS[m.id]}</div><div><div class="mentor-label">Mentor Persona</div><h3>${m.name}</h3><div class="mentor-role">${m.title}</div></div></div><p class="mentor-desc">${m.summary}</p><div class="mentor-style-tag">${m.style}</div>`;card.addEventListener("click",()=>togglePersona(m.id));document.getElementById("mentorGrid").appendChild(card);});updateSummary();}
+function togglePersona(id){const msg=document.getElementById("selectionMsg");msg.className="selection-msg";msg.textContent="";if(selectedPersonas.has(id)){selectedPersonas.delete(id);}else{if(selectedPersonas.size>=3){msg.classList.add("msg-error");msg.textContent="You can select up to 3 mentor personas. Deselect one to choose another.";return;}selectedPersonas.add(id);}saveForm();renderMentors();}
+
+/* ═══ RENDER ROLES ═══ */
+function renderRoles(){document.getElementById("roleGrid").innerHTML="";const maxed=selectedRoles.size>=3;MENTOR_ROLES.forEach(r=>{const isSel=selectedRoles.has(r.id);const card=document.createElement("div");card.className="role-card"+(isSel?" selected":"")+(!isSel&&maxed?" maxed":"");card.innerHTML=`<div class="role-num">${r.num}</div><div><div class="role-name">${r.name}</div><p class="role-desc">${r.desc}</p></div>`;card.addEventListener("click",()=>toggleRole(r.id));document.getElementById("roleGrid").appendChild(card);});updateSummary();}
+function toggleRole(id){const msg=document.getElementById("roleMsg");msg.className="selection-msg";msg.textContent="";if(selectedRoles.has(id)){selectedRoles.delete(id);}else{if(selectedRoles.size>=3){msg.classList.add("msg-error");msg.textContent="You can select up to 3 mentor roles. Deselect one to choose another.";return;}selectedRoles.add(id);}saveForm();renderRoles();}
+
+/* ═══ RENDER PLAYBOOK ═══ */
+function renderPlaybook(){document.getElementById("playbookGrid").innerHTML="";PLAYBOOK_STRATEGIES.forEach(s=>{const isSel=selectedStrategy===s.id;const card=document.createElement("div");card.className="playbook-card"+(isSel?" selected":"");card.innerHTML=`<div class="playbook-check"><svg viewBox="0 0 14 14"><polyline points="2,7 5.5,10.5 12,3"/></svg></div><div class="playbook-icon-row">${s.icon}${s.icon2||""}</div><div class="playbook-title">${s.title}</div><div class="playbook-subtitle">${s.subtitle}</div><p class="playbook-desc">${s.desc}</p><ul class="playbook-bullets">${s.bullets.map(b=>`<li class="${b.bold?"bold-item":""}">${b.text}</li>`).join("")}</ul>`;card.addEventListener("click",()=>{selectedStrategy=selectedStrategy===s.id?null:s.id;saveForm();renderPlaybook();updateSummary();});document.getElementById("playbookGrid").appendChild(card);});}
+
+/* ═══ SUMMARY ═══ */
+function updateSummary(){
+  const personas=MENTORS.filter(m=>selectedPersonas.has(m.id));
+  const roles=MENTOR_ROLES.filter(r=>selectedRoles.has(r.id));
+  const strategy=PLAYBOOK_STRATEGIES.find(s=>s.id===selectedStrategy);
+  document.getElementById("pillRowPersonas").innerHTML=personas.length?personas.map(m=>`<div class="pill">${m.name}</div>`).join(""):`<span style="font-size:.82rem;color:var(--text-3)">None selected yet</span>`;
+  document.getElementById("pillRowRoles").innerHTML=roles.length?roles.map(r=>`<div class="pill role-pill">${r.num}. ${r.name}</div>`).join(""):`<span style="font-size:.82rem;color:var(--text-3)">None selected yet</span>`;
+  document.getElementById("pillRowStrategy").innerHTML=strategy?`<div class="pill strategy-pill">${strategy.title} — ${strategy.subtitle}</div>`:`<span style="font-size:.82rem;color:var(--text-3)">None selected yet</span>`;
+  const parts=[];if(personas.length)parts.push(`Board: ${personas.map(m=>m.name).join(", ")}`);if(roles.length)parts.push(`Roles: ${roles.map(r=>r.name).join(", ")}`);if(strategy)parts.push(`Strategy: ${strategy.title}`);
+  document.getElementById("summaryText").textContent=parts.length?parts.join(" · "):"Complete the steps above to see your configuration.";
+}
+
+/* ═══ RESET ═══ */
+resetBtn.addEventListener("click",()=>{if(!confirm("Reset all fields, selections, and uploaded résumé?"))return;["userName","challenge","goal"].forEach(id=>document.getElementById(id).value="");document.getElementById("careerLevel").value="";document.getElementById("gsGrade").value="";selectedGS=null;selectedPersonas.clear();selectedRoles.clear();selectedStrategy=null;resumeText="";pickedAgency="";resumeFileName.textContent="";resumeDrop.classList.remove("has-file");resumeClearBtn.style.display="none";resumeFileInput.value="";document.getElementById("agencyPill").classList.remove("visible");document.getElementById("agencyManualWrap").classList.remove("visible");document.getElementById("agencySearch").value="";document.getElementById("agencyValue").value="";localStorage.removeItem(LS_KEY);lastGuidanceText="";downloadBtn.disabled=true;formMsg.textContent="";formMsg.className="selection-msg";responseContent.classList.remove("visible");responseEmpty.style.display="block";loadingWrap.classList.remove("active");renderGSGrid();renderMentors();renderRoles();renderPlaybook();});
+
+/* ═══ LOADING ═══ */
+function runLoadingSequence(steps,callback){responseEmpty.style.display="none";responseContent.classList.remove("visible");loadingWrap.classList.add("active");loadingSteps.innerHTML=steps.map((s,i)=>`<div class="loading-step" id="lstep${i}"><div class="step-dot"></div><span>${s}</span></div>`).join("");let i=0;function advance(){if(i>0){const p=document.getElementById(`lstep${i-1}`);if(p)p.className="loading-step done";}if(i<steps.length){const c=document.getElementById(`lstep${i}`);if(c)c.className="loading-step active";i++;setTimeout(advance,520);}else setTimeout(()=>{loadingWrap.classList.remove("active");callback();},300);}advance();}
+
+/* ═══ GENERATE ═══ */
+generateBtn.addEventListener("click",async()=>{
+  formMsg.className="selection-msg";formMsg.textContent="";
+  const values=getValues();const err=validate(values);
+  if(err){formMsg.classList.add("msg-error");formMsg.textContent=err;return;}
+  generateBtn.disabled=true;
+  const loadSteps=["Assembling your mentor board…","Loading mentor roles and playbook strategy…","Loading current federal policy context…",resumeText?"Analyzing your résumé with Claude AI…":"Contextualizing your career profile…","Generating 4 strategic recommendations…","Drafting 3 immediate next steps…","Crafting confidence and action statements…","Finalizing your AIMAAS guidance…"];
+  runLoadingSequence(loadSteps,async()=>{
+    try{if(resumeText){await renderGuidanceWithAI(values);}else{renderGuidanceLocal(values);}}
+    catch(e){console.warn("AI fallback:",e);renderGuidanceLocal(values);}
+    generateBtn.disabled=false;formMsg.classList.add("msg-success");formMsg.textContent="Your mentorship guidance is ready below.";downloadBtn.disabled=false;
+    setTimeout(()=>responseContent.scrollIntoView({behavior:"smooth",block:"start"}),100);
+  });
+});
+
+function getValues(){
+  const personas=MENTORS.filter(m=>selectedPersonas.has(m.id));
+  const roles=MENTOR_ROLES.filter(r=>selectedRoles.has(r.id));
+  const strategy=PLAYBOOK_STRATEGIES.find(s=>s.id===selectedStrategy);
+  return{userName:document.getElementById("userName").value.trim(),careerLevel:document.getElementById("careerLevel").value.trim(),gsGrade:document.getElementById("gsGrade").value.trim(),agency:document.getElementById("agencyValue").value.trim()||pickedAgency,challenge:document.getElementById("challenge").value.trim(),goal:document.getElementById("goal").value.trim(),resumeContext:!!resumeText,personaNames:personas.map(p=>p.name).join(", "),roleNames:roles.map(r=>r.name).join(", "),roleDescs:roles.map(r=>`${r.name}: ${r.desc}`).join("; "),strategyTitle:strategy?strategy.title:"",strategySubtitle:strategy?strategy.subtitle:"",strategyDesc:strategy?strategy.desc:"",strategyBullets:strategy?strategy.bullets.map(b=>b.text).join(", "):""};}
+function validate(v){if(selectedPersonas.size===0)return"Please select at least one mentor persona (Step 1) to continue.";if(!v.userName||!v.careerLevel||!v.agency||!v.challenge||!v.goal)return"Please complete all required fields in Step 3 before generating.";return"";}
+
+/* ═══ AI GUIDANCE ═══ */
+async function renderGuidanceWithAI(v){
+  const picks=MENTORS.filter(m=>selectedPersonas.has(m.id));
+  const boardDesc=picks.map(m=>`${m.name} (${m.title}): ${m.specialty}`).join("\n");
+  const gsTrack=selectedGS?GS_TRACK[selectedGS]:"mid";
+  const policyContext=POLICY_DB.getSummaryForPrompt(gsTrack);
+  const isBase64=resumeText.startsWith("data:");
+  const base64Data=isBase64?resumeText.split(",")[1]:null;
+  const isPDF=resumeText.startsWith("data:application/pdf");
+  const systemPrompt=`You are AIMAAS — AI Mentoring as a Service — a career advisory system for federal professionals. Give structured, personalized, highly specific mentorship guidance in the voice of the selected mentor board. Tone: professional, warm, strategic, direct. No generic platitudes. Every recommendation must reference the person's specific background, agency, career level, challenge, résumé details, requested mentor roles, and mentee playbook strategy. Incorporate current federal policy context where relevant.\n\nRespond ONLY with valid JSON — no markdown, no preamble:\n{"recs":["rec1","rec2","rec3","rec4"],"steps":["step1","step2","step3"],"confidence":"statement","action":"statement","policyNotes":["note"]}`;
+  const userPrompt=`NAME: ${v.userName}\nCAREER LEVEL: ${v.careerLevel}\nAGENCY: ${v.agency}\nCHALLENGE: ${v.challenge}\nGOAL: ${v.goal}\n\nMENTOR BOARD:\n${boardDesc}\n\nMENTOR ROLES REQUESTED:\n${v.roleDescs||"Not specified"}\n\nMENTEE PLAYBOOK STRATEGY:\n${v.strategyTitle?`${v.strategyTitle} — ${v.strategySubtitle}\n${v.strategyDesc}\nKey actions: ${v.strategyBullets}`:"Not specified"}\n\nCURRENT FEDERAL POLICY CONTEXT:\n${policyContext}\n\nGenerate: 4 strategic recommendations (2-4 sentences each, reference résumé where relevant), 3 immediate next steps (1-3 sentences, align with playbook strategy), 1 confidence statement (2-3 sentences, grounded in actual background), 1 action statement (1-2 sentences, something they can do TODAY), 1-2 policyNotes (1 sentence each naming a specific current policy affecting their situation).`;
+  let messageContent;
+  if(isPDF&&base64Data){messageContent=[{type:"document",source:{type:"base64",media_type:"application/pdf",data:base64Data}},{type:"text",text:userPrompt}];}
+  else if(isBase64){messageContent=[{type:"text",text:userPrompt+"\n\n[Word document uploaded — use all context provided to personalize.]"}];}
+  else{messageContent=[{type:"text",text:userPrompt+`\n\nRÉSUMÉ:\n${resumeText.substring(0,6000)}`}];}
+  const response=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,system:systemPrompt,messages:[{role:"user",content:messageContent}]})});
+  if(!response.ok)throw new Error(`API ${response.status}`);
+  const data=await response.json();
+  const raw=data.content.map(b=>b.text||"").join("").trim();
+  const parsed=JSON.parse(raw.replace(/```json|```/g,"").trim());
+  renderGuidanceHTML(v,picks,parsed.recs,parsed.steps,parsed.confidence,parsed.action,true,parsed.policyNotes||[]);
+}
+
+/* ═══ LOCAL GUIDANCE ═══ */
+function renderGuidanceLocal(v){
+  const picks=MENTORS.filter(m=>selectedPersonas.has(m.id));
+  const gsTrack=selectedGS?GS_TRACK[selectedGS]:"mid";
+  const relevantPolicies=POLICY_DB.getRelevantPolicies(gsTrack);
+  const allRecs=[];picks.forEach(m=>m.voice.recs.forEach(fn=>allRecs.push(fn(v))));
+  const fb=[`At ${v.agency}, building deliberate visibility means connecting your contributions to the broader mission narrative.`,`Invest in your federal leadership brand by identifying two to three themes you want to be consistently associated with across projects and briefings.`];
+  while(allRecs.length<4)allRecs.push(fb[allRecs.length%2]);
+  const recs=allRecs.slice(0,4);
+  const allSteps=[];picks.forEach(m=>m.voice.steps.forEach(fn=>allSteps.push(fn(v))));
+  while(allSteps.length<3)allSteps.push(`Schedule a focused 30-minute reflection to map your three biggest contributions from the last 90 days and how you'll surface them to decision-makers.`);
+  const steps=allSteps.slice(0,3);
+  const confidence=picks[picks.length-1].voice.confidence(v);
+  const action=picks[picks.length-1].voice.action(v);
+  const policyNotes=relevantPolicies.map(p=>`Given the ${p.title}: ${p.career_implications}`).slice(0,2);
+  renderGuidanceHTML(v,picks,recs,steps,confidence,action,false,policyNotes);
+}
+
+/* ═══ RENDER GUIDANCE ═══ */
+function renderGuidanceHTML(v,picks,recs,steps,confidence,action,aiPowered,policyNotes){
+  const roles=MENTOR_ROLES.filter(r=>selectedRoles.has(r.id));
+  const strategy=PLAYBOOK_STRATEGIES.find(s=>s.id===selectedStrategy);
+  const avatarsHTML=picks.map(m=>`<div class="response-avatar-img">${PORTRAITS[m.id]}</div>`).join("");
+  const boardName=picks.length===1?picks[0].name:picks.length===2?`${picks[0].name} & ${picks[1].name}`:`${picks[0].name}, ${picks[1].name} & ${picks[2].name}`;
+  const voiceHTML=picks.map(m=>`<div class="voice-card"><div class="voice-avatar-img">${PORTRAITS[m.id]}</div><div class="voice-content"><div class="voice-name">${m.name} says</div><p class="voice-text">${m.voice.opener}</p></div></div>`).join("");
+  const recsHTML=recs.map((r,i)=>`<li><div class="rec-num">${i+1}</div><div class="rec-text">${r}</div></li>`).join("");
+  const stepsHTML=steps.map(s=>`<li><div class="step-arrow">→</div><div class="step-text">${s}</div></li>`).join("");
+  const policyHTML=policyNotes&&policyNotes.length?`<div class="guidance-block"><div class="guidance-label">Policy Context</div><div class="policy-context-bar"><strong>Current federal landscape affecting your guidance:</strong><br/>${policyNotes.map(n=>`<span style="display:block;margin-top:6px">• ${n}</span>`).join("")}<div style="margin-top:8px"><span class="policy-tag">Policy-Aware</span><span class="policy-tag">${POLICY_DB.version}</span></div></div></div>`:"";
+  const contextBadgesHTML=`<div class="context-badges">${roles.map(r=>`<span class="context-badge badge-role">Role: ${r.name}</span>`).join("")}${strategy?`<span class="context-badge badge-strategy">Strategy: ${strategy.title}</span>`:""}</div>`;
+  const resumeBadge=aiPowered?`<div class="resume-badge"><span>✓</span> Résumé-informed · AI-powered · Policy-aware</div>`:"";
+  responseContent.innerHTML=`${resumeBadge}${contextBadgesHTML}
+    <div class="response-mentor-header"><div class="response-avatars">${avatarsHTML}</div><div><div class="response-board-name">Your mentor board</div><div class="response-board-title">${boardName}</div></div></div>
+    <div class="guidance-block"><div class="guidance-label">Opening notes</div><div class="voice-grid">${voiceHTML}</div></div>
+    <div class="guidance-block"><div class="guidance-label">Situation</div><p style="color:var(--text-2);font-size:.97rem;line-height:1.7"><strong style="color:var(--text)">${v.userName}</strong> is operating at the <strong style="color:var(--text)">${v.careerLevel}</strong> level within <strong style="color:var(--text)">${v.agency}</strong>.<br/><br/><em style="color:var(--text-2)">Challenge:</em> ${v.challenge}<br/><em style="color:var(--text-2)">Goal:</em> ${v.goal}${v.roleNames?`<br/><em style="color:var(--text-2)">Mentor roles needed:</em> ${v.roleNames}`:""}${v.strategyTitle?`<br/><em style="color:var(--text-2)">Playbook strategy:</em> ${v.strategyTitle} — ${v.strategySubtitle}`:""}</p></div>
+    ${policyHTML}
+    <div class="guidance-block"><div class="guidance-label">4 Strategic Recommendations</div><ul class="rec-list">${recsHTML}</ul></div>
+    <div class="guidance-block"><div class="guidance-label">3 Immediate Next Steps</div><ul class="step-list">${stepsHTML}</ul></div>
+    <div class="guidance-block"><div class="guidance-label">Confidence Statement</div><div class="confidence-block"><p>${confidence}</p></div></div>
+    <div class="guidance-block"><div class="guidance-label">Action Statement</div><div class="action-block"><div class="action-icon">⚡</div><p class="action-text">${action}</p></div></div>`;
+  lastGuidanceText=buildPlainText(v,picks,recs,steps,confidence,action,aiPowered,policyNotes);
+  responseContent.classList.add("visible");
+}
+
+function buildPlainText(v,picks,recs,steps,confidence,action,aiPowered,policyNotes){
+  const strategy=PLAYBOOK_STRATEGIES.find(s=>s.id===selectedStrategy);
+  const roles=MENTOR_ROLES.filter(r=>selectedRoles.has(r.id));
+  return["AIMAAS | AI Mentoring as a Service","Federal Career Edition · Policy-Aware · "+POLICY_DB.version,"═".repeat(50),"",`MENTOR BOARD: ${picks.map(m=>m.name).join(" & ")}`,roles.length?`MENTOR ROLES: ${roles.map(r=>r.name).join(", ")}`:"",strategy?`PLAYBOOK STRATEGY: ${strategy.title} — ${strategy.subtitle}`:"",aiPowered?"(Résumé-Informed · AI-Powered)":"(Standard Guidance)","","SITUATION",`Name: ${v.userName}`,`Career Level: ${v.careerLevel}`,`Agency: ${v.agency}`,`Challenge: ${v.challenge}`,`Goal: ${v.goal}`,"","POLICY CONTEXT",...(policyNotes||[]).map(n=>`• ${n}`),"","4 STRATEGIC RECOMMENDATIONS",...recs.map((r,i)=>`${i+1}. ${r}`),"","3 IMMEDIATE NEXT STEPS",...steps.map((s,i)=>`${i+1}. ${s}`),"","CONFIDENCE STATEMENT",confidence,"","ACTION STATEMENT",action,"","═".repeat(50),"AIMAAS MVP · AI Mentoring as a Service · Federal Career Edition"].filter(l=>l!=="").join("\n");}
+
+downloadBtn.addEventListener("click",()=>{if(!lastGuidanceText)return;const blob=new Blob([lastGuidanceText],{type:"text/plain"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="AIMAAS-guidance.txt";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);});
+
+/* ═══ INIT ═══ */
+loadForm();renderGSGrid();renderMentors();renderRoles();renderPlaybook();
+</script>
+</body>
+</html>
